@@ -1,0 +1,10 @@
+id,refId,showRoom,division,zone,territory,plantDescription
+1,BAN,Bandra,Mumbai Suburban,Western Zone,Bandra,Bandstand
+2,AND,Andheri,Mumbai Suburban,Western Zone,Andheri,Lokhandwala
+3,COL,Colaba,Mumbai City,Southern Zone,Colaba,Gateway of India
+4,JUH,Juhu,Mumbai Suburban,Western Zone,Juhu,Juhu Beach
+5,POW,Powai,Mumbai Suburban,Central Zone,Powai,Powai Lake
+6,DAD,Dadar,Mumbai City,Central Zone,Dadar,Shivaji Park
+7,BOR,Borivali,Mumbai Suburban,Western Zone,Borivali,Sanjay Gandhi NP
+8,MAL,Malad,Mumbai Suburban,Western Zone,Malad,Inorbit Mall
+9,GHA,Ghatkopar,Mumbai Suburban,Central Zone,Ghatkopar,R City Mall

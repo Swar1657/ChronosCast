@@ -1,0 +1,25 @@
+profitCenter,brand,category,articleNo,articleDescription,product
+PTV,Panasonic,TV,25012,EcoVision HD 32,Panasonic TV
+PTV,Panasonic,TV,25089,EcoVision UHD 43,Panasonic TV
+PTV,Panasonic,TV,25143,EcoVision Pro 55,Panasonic TV
+TTV,Toshiba,TV,37632,TechStream HD 32,Toshiba TV
+TTV,Toshiba,TV,37699,TechStream 4K 43,Toshiba TV
+TTV,Toshiba,TV,37745,TechStream Pro 50,Toshiba TV
+LTV,LG,TV,25354,LG NanoPrecision 43,LG TV
+LTV,LG,TV,25410,LG NanoPrecision 55,LG TV
+LTV,LG,TV,25467,LG QLED Vision 50,LG TV
+STV,Sony,TV,25266,HomeScreen Exp 32,Sony TV
+STV,Sony,TV,25301,HomeScreen Pro 43,Sony TV
+STV,Sony,TV,25355,HomeScreen Ultra 55,Sony TV
+LAC,LG,AC,47808,LG AirComfort Deluxe 1.5T,LG AC
+LAC,LG,AC,47855,LG AirComfort Inverter 1T,LG AC
+LAC,LG,AC,47902,LG AirComfort Dual 2T,LG AC
+PAC,Panasonic,AC,48010,EcoBreeze Split 1.5T,Panasonic AC
+PAC,Panasonic,AC,48067,EcoBreeze Inverter 1T,Panasonic AC
+PAC,Panasonic,AC,48123,EcoBreeze Window 1.5T,Panasonic AC
+HAC,Haier,AC,48210,FrostGuard Split 1.5T,Haier AC
+HAC,Haier,AC,48266,FrostGuard Inverter 1T,Haier AC
+HAC,Haier,AC,48322,FrostGuard Dual 2T,Haier AC
+PRF,Panasonic,RF,50060,EcoChill Mini 198,Panasonic Refrigerator
+PRF,Panasonic,RF,24778,EcoCool BCD 290,Panasonic Refrigerator
+PRF,Panasonic,RF,49552,EcoCool BCD 260,Panasonic Refrigerator
