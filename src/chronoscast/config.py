@@ -27,6 +27,9 @@ class ProjectConfig:
     DATE_COLUMN = "billingdate"
     TARGET_VARIABLE = "billqty"
     
+    # Selected Forecasting Grain (Based on Sparsity Analysis)
+    FORECASTING_GRAIN = ["sales_category", "site"]
+    
     # Forecasting Bounds and Defaults
     FORECAST_HORIZON_MONTHS = 4
     DECOMPOSITION_WINDOW_MONTHS = 18
