@@ -16,6 +16,7 @@ class ProjectConfig:
         "product": os.path.join(DATA_RAW_DIR, "dimProduct.csv"),
         "profit_center": os.path.join(DATA_RAW_DIR, "dimProfitCenter.csv"),
         "showroom": os.path.join(DATA_RAW_DIR, "dimShowRoom.csv"),
+        "date_dim": os.path.join(DATA_RAW_DIR, "dateDim.csv"),
         "weather": os.path.join(DATA_RAW_DIR, "weatherIndex.csv"),
         "economic": os.path.join(DATA_RAW_DIR, "economicIndex.csv")
     }
@@ -27,8 +28,13 @@ class ProjectConfig:
     DATE_COLUMN = "billingdate"
     TARGET_VARIABLE = "billqty"
     
-    # Selected Forecasting Grain (Based on Sparsity Analysis)
-    FORECASTING_GRAIN = ["sales_category", "site"]
+    # Candidate Forecasting Grains for Sparsity Analysis
+    CANDIDATE_GRAINS = [
+        ['sales_category', 'site'],
+        ['sales_category', 'brand', 'site'],
+        ['sales_category', 'profitcenter'],
+        ['sales_category', 'brand', 'profitcenter']
+    ]
     
     # Forecasting Bounds and Defaults
     FORECAST_HORIZON_MONTHS = 4

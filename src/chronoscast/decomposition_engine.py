@@ -11,14 +11,13 @@ class DecompositionEngine:
     Allocates aggregate parent forecasts (e.g., Category x Site) down to 
     granular child forecasts (e.g., Article x Site) based on recent historical contribution ratios.
     """
-    def __init__(self, master_df: pd.DataFrame, config=ProjectConfig):
+    def __init__(self, master_df: pd.DataFrame, parent_grain: list, config=ProjectConfig):
         self.master = master_df
         self.config = config
         self.target = self.config.TARGET_VARIABLE
         self.window = self.config.DECOMPOSITION_WINDOW_MONTHS
         
-        # Parent: ['sales_category', 'site']
-        self.parent_grain = self.config.FORECASTING_GRAIN
+        self.parent_grain = parent_grain
         # Child: ['articleno', 'site']
         self.child_grain = ['articleno', 'site']
 

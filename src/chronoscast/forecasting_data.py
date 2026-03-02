@@ -10,10 +10,10 @@ class ForecastingDataBuilder:
     chronological forecasting dataset at the configured target grain.
     """
     
-    def __init__(self, master_df: pd.DataFrame, config=ProjectConfig):
+    def __init__(self, master_df: pd.DataFrame, grain: list, config=ProjectConfig):
         self.master = master_df.copy()
         self.config = config
-        self.grain = self.config.FORECASTING_GRAIN
+        self.grain = grain
         self.target = self.config.TARGET_VARIABLE
 
     def build(self) -> pd.DataFrame:
@@ -49,7 +49,7 @@ class ForecastingDataBuilder:
         
         # Cartesian product of series and months
         multi_idx = pd.MultiIndex.from_product(
-            [unique_series[col] for col in self.grain] + [all_months],
+            [df_grain[col].unique() for col in self.grain] + [all_months],
             names=self.grain + ['month_start']
         )
         
@@ -60,6 +60,21 @@ class ForecastingDataBuilder:
         
         # Fill missing demand with 0
         df_final[self.target] = df_final[self.target].fillna(0)
+        
+        # 2b. Outlier Capping (IQR Winsorization)
+        # Apply capping per time-series group to protect against extreme artificial demand spikes.
+        logger.info("Applying IQR Winsorization for outlier detection.")
+        
+        def cap_outliers(series):
+            # Calculate Q1 and Q3 of the demand for this specific series
+            q1 = series.quantile(0.25)
+            q3 = series.quantile(0.75)
+            iqr = q3 - q1
+            upper_bound = q3 + (1.5 * iqr)
+            # Clip any value exceeding the mathematically sound upper bound
+            return series.clip(upper=upper_bound)
+
+        df_final[self.target] = df_final.groupby(self.grain)[self.target].transform(cap_outliers)
         
         # Forward/Backward fill exogenous variables securely within each site if needed
         # (Assuming weather is stable per site, and CPI/GDP is stable overall)

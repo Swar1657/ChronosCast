@@ -8,3 +8,18 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Databases / Runtime Artifacts
+*.db
+chronoscast_forecasts.db
+
+# Excluded internal notes, case study, and scratch files
+agent.md
+audit_results.json
+PWC sales forcasting solution walkthrough.md
+PwC_ChronosCast_Case_Study_Structured.md
+COMPLETION_REPORT.md
+scripts/
+scratch/
+
+

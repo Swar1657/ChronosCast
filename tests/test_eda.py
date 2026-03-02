@@ -33,3 +33,55 @@ def test_get_overall_demand_trend(mock_master_data):
     assert len(trend) == 2
     assert trend['billqty'].iloc[0] == 40 # Jan: 10 + 30
     assert trend['billqty'].iloc[1] == 20 # Feb: 20
+
+def test_select_forecasting_grain():
+    # Mock analysis results to test the selection logic independently
+    class MockConfig:
+        MIN_OBSERVATIONS = 24
+        TARGET_VARIABLE = 'target'
+        
+    class MockEDA(EDADiagnostics):
+        def analyze_sparsity(self, grains):
+            return pd.DataFrame([
+                {'Grain': 'cat x site', 'Series_Count': 27, 'Fill_Rate_Pct': 98.0, 'Viability_Pct': 100.0},
+                {'Grain': 'cat x brand x site', 'Series_Count': 72, 'Fill_Rate_Pct': 93.0, 'Viability_Pct': 100.0},
+                {'Grain': 'cat x pc', 'Series_Count': 8, 'Fill_Rate_Pct': 100.0, 'Viability_Pct': 100.0},
+                {'Grain': 'cat x brand x pc', 'Series_Count': 8, 'Fill_Rate_Pct': 99.0, 'Viability_Pct': 90.0} # not 100% viable
+            ])
+            
+    mock_df = pd.DataFrame() # dummy
+    eda = MockEDA(mock_df, MockConfig)
+    
+    grains = [
+        ['cat', 'site'],
+        ['cat', 'brand', 'site'],
+        ['cat', 'pc'],
+        ['cat', 'brand', 'pc']
+    ]
+    
+    result = eda.select_forecasting_grain(grains)
+    
+    # Expect cat x brand x site because:
+    # 1. cat x brand x pc is dropped (Viability < 100)
+    # 2. remaining: cat x brand x site has highest depth (3) vs others (2)
+    assert result['selected_grain'] == ['cat', 'brand', 'site']
+    assert 'Depth=3' in result['selection_reason']
+
+def test_select_forecasting_grain_tie_breaker():
+    class MockConfig:
+        MIN_OBSERVATIONS = 24
+        TARGET_VARIABLE = 'target'
+        
+    class MockEDA(EDADiagnostics):
+        def analyze_sparsity(self, grains):
+            return pd.DataFrame([
+                {'Grain': 'cat x pc', 'Series_Count': 8, 'Fill_Rate_Pct': 100.0, 'Viability_Pct': 100.0},
+                {'Grain': 'cat x site', 'Series_Count': 27, 'Fill_Rate_Pct': 98.0, 'Viability_Pct': 100.0},
+            ])
+            
+    eda = MockEDA(pd.DataFrame(), MockConfig)
+    
+    result = eda.select_forecasting_grain([['cat', 'pc'], ['cat', 'site']])
+    
+    # Both have depth 2. Tie break goes to Series_Count (27 > 8)
+    assert result['selected_grain'] == ['cat', 'site']

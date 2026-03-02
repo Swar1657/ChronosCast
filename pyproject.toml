@@ -12,3 +12,7 @@ dependencies = [
     "statsmodels>=0.15.0",
     "torch>=2.14.0",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+

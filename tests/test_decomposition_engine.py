@@ -27,7 +27,7 @@ def test_decomposition_calculate_ratios(dummy_master_df):
     class DummyConfig(ProjectConfig):
         DECOMPOSITION_WINDOW_MONTHS = 6
         
-    engine = DecompositionEngine(dummy_master_df, config=DummyConfig)
+    engine = DecompositionEngine(dummy_master_df, ['sales_category', 'site'], config=DummyConfig)
     ratios = engine.calculate_ratios()
     
     # Check shape (4 unique children)
@@ -51,7 +51,7 @@ def test_decompose_and_reconcile(dummy_master_df):
     class DummyConfig(ProjectConfig):
         DECOMPOSITION_WINDOW_MONTHS = 6
         
-    engine = DecompositionEngine(dummy_master_df, config=DummyConfig)
+    engine = DecompositionEngine(dummy_master_df, ['sales_category', 'site'], config=DummyConfig)
     
     # Parent forecasts
     parent_forecasts = pd.DataFrame({
